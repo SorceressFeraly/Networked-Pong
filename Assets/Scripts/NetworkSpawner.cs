@@ -53,7 +53,7 @@ public class NetworkSpawner : NetworkBehaviour
         playerToInstantiate.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
         ulong objectId = playerToInstantiate.GetComponent<NetworkObject>().NetworkObjectId;
 
-        SpawnClientRpc(objectId);
+        //SpawnClientRpc(objectId);
 
     }
 

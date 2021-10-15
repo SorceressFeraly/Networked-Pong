@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MLAPI;
+using MLAPI.Messaging;
 using MLAPI.NetworkVariable;
 
 public class PlayerMovement : NetworkBehaviour
@@ -11,17 +12,24 @@ public class PlayerMovement : NetworkBehaviour
     [Tooltip("The speed the player moves.")]
     private float moveSpeed;
 
+    private float xAxis;
+
     private CharacterController playerController;
+
 
     // Start is called before the first frame update
     void Start()
     {
         playerController = GetComponent<CharacterController>();
-    }
 
-    private void Awake()
-    {
-        transform.position = new Vector3(-7, 0, 0);
+        if (IsHost)
+        {
+            xAxis = -7;
+        }
+        else if (IsClient)
+        {
+            xAxis = 7;
+        }
     }
 
     // Update is called once per frame
@@ -30,7 +38,7 @@ public class PlayerMovement : NetworkBehaviour
         if (!IsLocalPlayer) { return; }
 
         MovePlayer();
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4,4), transform.position.z);
+        transform.position = new Vector3(xAxis, Mathf.Clamp(transform.position.y, -4,4), transform.position.z);
     }
 
     void MovePlayer()
