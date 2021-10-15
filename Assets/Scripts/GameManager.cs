@@ -44,6 +44,9 @@ public class GameManager : NetworkBehaviour
     void StartGameButton()
     {
         if (GUILayout.Button("Start Game")) { StartGame(); }
+        GUILayout.TextArea($"Player 1 score: {P1Score.Value}");
+        GUILayout.TextArea($"Player 2 score: {P2Score.Value}");
+
     }
 
     static void StatusLabels()
@@ -79,8 +82,9 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void DeSpawnBallServerRpc(ulong id)
     {
+        Debug.Log("Despawning object with id: " + id);
         NetworkObject ballObject = GetNetworkObject(id);
-        ballObject.Despawn();
+        ballObject.Despawn(true);
     }
 
 }
